@@ -1,5 +1,16 @@
+salario_base: int
 
-salario_base = int(input("Ingrese el salario base (COP): "))
+while True:
+    try:
+        salario_base = int(input("Ingrese el salario base (COP): "))
+        if salario_base < 0:
+            raise ValueError("El salario no puede ser negativo.")
+        break  # Sale del bucle si todo está bien
+    except ValueError as e:
+        print(f"Entrada inválida: {e}. Inténtelo de nuevo.")
+    except KeyboardInterrupt:
+        print("\nProceso interrumpido. Saliendo...")
+        exit()  # Sale del programa
 
 # Lo que paga el empleado
 pension = salario_base * 0.04
@@ -41,7 +52,7 @@ print(f"Caja de compensación: {caja_compensacion:,.0f} COP")
 print(f"Deducciones empleador: {deducciones_empleador:,.0f} COP")
 print(f"Salario base: {salario_base:,.0f} COP")
 print(f"Salario total: {salario_base + deducciones_empleador:,.0f} COP")
-
+print("\n")
 
 # Datos
 salario_cop_mensual = salario_base + deducciones_empleador  # Salario en COP mensual
@@ -69,23 +80,27 @@ computador_cop = (computador_usd * dolar_hoy) / 12
 herramientas_cop = (herramientas_usd * dolar_hoy) / 12
 meets_cop = (meets_usd * dolar_hoy) / 12
 
+total_perks_cop = (uber_cop +
+                     salud_cop +
+                     comida_cop +
+                     deporte_cop +
+                     streaming_cop +
+                     computador_cop +
+                     herramientas_cop +
+                     meets_cop)
+
 # Cálculo del total mensual
 salario_total_cop_mensual = (salario_cop_mensual +
-                             (salario_usd_mensual * dolar_hoy) +
-                             uber_cop +
-                             salud_cop +
-                             comida_cop +
-                             deporte_cop +
-                             streaming_cop +
-                             computador_cop +
-                             herramientas_cop +
-                             meets_cop)
+    total_perks_cop +
+    (salario_usd_mensual * dolar_hoy)
+)
 
 salario_total_usd_mensual = salario_total_cop_mensual / dolar_hoy
 salario_total_anual_cop = salario_total_cop_mensual * 12
 salario_toal_anual_usd = salario_total_usd_mensual * 12
 
 
+print(f"Total perks: {total_perks_cop:,.0f} COP")
 print(f"Salario total mensual: {salario_total_cop_mensual:,.0f} COP")
 print(f"Salario total anual:   {salario_total_anual_cop:,.0f} COP")
 print(f"Salario total mensual: {salario_total_usd_mensual:,.0f} USD")
