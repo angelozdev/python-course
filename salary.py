@@ -28,14 +28,14 @@ caja_compensacion = salario_base * 0.04
 
 
 deducciones_empleador = (
-                        salud_empleador +
-                        pension_empleador +
-                        cesantias +
-                        intereses_cesantias +
-                        prima +
-                        vacaciones +
-                        arl +
-                        caja_compensacion
+    salud_empleador
+    + pension_empleador
+    + cesantias
+    + intereses_cesantias
+    + prima
+    + vacaciones
+    + arl
+    + caja_compensacion
 )
 
 print(f"Salud: {salud:,.0f} COP")
@@ -56,8 +56,10 @@ print("\n")
 
 # Datos
 salario_cop_mensual = salario_base + deducciones_empleador  # Salario en COP mensual
-salario_usd_mensual = int(input("Ingrese el salario en USD: "))  # Salario en USD mensual
-dolar_hoy: float = 4_386.97                 # Tasa de cambio actual
+salario_usd_mensual = int(
+    input("Ingrese el salario en USD: ")
+)  # Salario en USD mensual
+dolar_hoy: float = 4_386.97  # Tasa de cambio actual
 
 # Perks mensuales
 uber_usd = 30
@@ -80,19 +82,20 @@ computador_cop = (computador_usd * dolar_hoy) / 12
 herramientas_cop = (herramientas_usd * dolar_hoy) / 12
 meets_cop = (meets_usd * dolar_hoy) / 12
 
-total_perks_cop = (uber_cop +
-                     salud_cop +
-                     comida_cop +
-                     deporte_cop +
-                     streaming_cop +
-                     computador_cop +
-                     herramientas_cop +
-                     meets_cop)
+total_perks_cop = (
+    uber_cop
+    + salud_cop
+    + comida_cop
+    + deporte_cop
+    + streaming_cop
+    + computador_cop
+    + herramientas_cop
+    + meets_cop
+)
 
 # Cálculo del total mensual
-salario_total_cop_mensual = (salario_cop_mensual +
-    total_perks_cop +
-    (salario_usd_mensual * dolar_hoy)
+salario_total_cop_mensual = (
+    salario_cop_mensual + total_perks_cop + (salario_usd_mensual * dolar_hoy)
 )
 
 salario_total_usd_mensual = salario_total_cop_mensual / dolar_hoy

@@ -44,6 +44,7 @@ def test_iter():
     for i in range(len(b)):
         assert next(bi) == b[i]
 
+
 def test_next():
     numbers = [1, 2, 3, 4, 5]
     it = iter(numbers)
@@ -53,6 +54,7 @@ def test_next():
     assert next(it) == 3
     assert next(it) == 4
     assert next(it) == 5
+
 
 def test_convert_object_to_iterator():
     class Fibonacci:
@@ -81,6 +83,7 @@ def test_convert_object_to_iterator():
     assert next(fib_iter) == 13
     assert next(fib_iter) == 21
 
+
 def test_zip():
     numbers: list[int] = [1, 2, 3, 4, 5]
     letters: list[str] = ["a", "b", "c", "d", "e"]
@@ -89,6 +92,7 @@ def test_zip():
 
     assert list(zipped) == expected
 
+
 def test_enumerate():
     numbers: list[int] = [1, 2, 3, 4, 5]
     enumerated: enumerate[int] = enumerate(numbers)
@@ -96,23 +100,26 @@ def test_enumerate():
 
     assert list(enumerated) == expected
 
+
 def test_filter():
     numbers: list[int] = [1, 2, 3, 4, 5]
     filtered: filter[int] = filter(lambda x: x % 2 == 0, numbers)
     expected: list[int] = [2, 4]
 
-    for (i, j) in zip(filtered, expected):
+    for i, j in zip(filtered, expected):
         assert i == j
+
 
 def test_map():
     numbers: list[int] = [1, 2, 3, 4, 5]
-    mapped: map[int] = map(lambda x: x ** 2, numbers)
+    mapped: map[int] = map(lambda x: x**2, numbers)
     expected: list[int] = [1, 4, 9, 16, 25]
 
-    for (i, j) in zip(mapped, expected):
+    for i, j in zip(mapped, expected):
         assert i == j
 
-def  test_count():
+
+def test_count():
     from itertools import count
 
     c: count = count(start=1, step=2)
@@ -122,6 +129,7 @@ def  test_count():
     assert next(c) == 7
     assert next(c) == 9
     assert next(c) == 11
+
 
 def test_cycle():
     from itertools import cycle
@@ -134,6 +142,7 @@ def test_cycle():
     assert next(c) == "b"
     assert next(c) == "c"
 
+
 def test_repeat():
     from itertools import repeat
 
@@ -142,6 +151,7 @@ def test_repeat():
     assert next(r) == 5
     assert next(r) == 5
 
+
 def test_accumulate():
     from itertools import accumulate
 
@@ -149,8 +159,9 @@ def test_accumulate():
     acc: Iterator[int] = accumulate(numbers)
     expected: list[int] = [1, 3, 6, 10, 15]
 
-    for (i, j) in zip(acc, expected):
+    for i, j in zip(acc, expected):
         assert i == j
+
 
 def test_chain():
     from itertools import chain
@@ -160,8 +171,9 @@ def test_chain():
     chained: Iterator[int | str] = chain(numbers, letters)
     expected: list[int | str] = [1, 2, 3, "a", "b", "c"]
 
-    for (i, j) in zip(chained, expected):
+    for i, j in zip(chained, expected):
         assert i == j
+
 
 def test_permutations():
     from itertools import permutations
@@ -174,19 +186,21 @@ def test_permutations():
         (2, 1, 3),
         (2, 3, 1),
         (3, 1, 2),
-        (3, 2, 1)
+        (3, 2, 1),
     ]
 
-    for (i, j) in zip(perms, expected):
+    for i, j in zip(perms, expected):
         assert i == j
+
 
 def test_reversed():
     numbers: list[int] = [1, 2, 3, 4, 5]
     rev: Iterator[int] = reversed(numbers)
     expected: list[int] = [5, 4, 3, 2, 1]
 
-    for (i, j) in zip(rev, expected):
+    for i, j in zip(rev, expected):
         assert i == j
+
 
 def test_generators():
     def fibonacci() -> Generator[int, None, None]:
@@ -195,9 +209,8 @@ def test_generators():
             yield a
             a, b = b, a + b
 
-
     fib: Iterator[int] = fibonacci()
     expected: list[int] = [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
-    for (i, j) in zip(fib, expected):
+    for i, j in zip(fib, expected):
         assert i == j

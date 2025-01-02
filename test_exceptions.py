@@ -1,6 +1,6 @@
-from test.test_ctypes.test_repr import subclasses
 import random
 from unittest.mock import MagicMock
+
 
 def test_divide_by_zero():
     try:
@@ -13,6 +13,7 @@ def test_divide_by_zero():
     else:
         raise AssertionError("Exception not raised")
 
+
 def test_capture_multiple_errors():
     try:
         random_number = random.choice([True, False])
@@ -24,11 +25,12 @@ def test_capture_multiple_errors():
             print(n)
     except (ValueError, ZeroDivisionError) as e:
         assert (
-            str(e) == "invalid literal for int() with base 10: 'hola'" or
-            str(e) == "integer division or modulo by zero"
+            str(e) == "invalid literal for int() with base 10: 'hola'"
+            or str(e) == "integer division or modulo by zero"
         )
     else:
         raise AssertionError("Exception not raised")
+
 
 def test_execute_finally():
     fn = MagicMock()
