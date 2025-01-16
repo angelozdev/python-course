@@ -1,12 +1,42 @@
+import sys
+import time
 from typing import Self
 
 
+def mesure_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"Execution time: {end - start}")
+        return result
+
+    return wrapper
+
+
+class PersonException(Exception):
+    __slots__ = ["message"]
+    message: str
+
+    class InstanceError(Exception):
+        def __init__(self, message: str):
+            self.message = message
+
+    class AgeError(Exception):
+        def __init__(self, message: str):
+            self.message = message
+
+
 class Person:
+    __slots__ = ["name", "age", "is_active"]
     name: str
     age: int
-    is_active: bool = True
+    is_active: bool
 
     def __init__(self, name: str, age: int):
+        if age < 0:
+            raise PersonException.AgeError("Age must be a positive number")
+
         self.name = name
         self.age = age
         self.is_active = True
@@ -31,7 +61,9 @@ class Person:
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Person):
-            return False
+            raise PersonException.InstanceError(
+                "You can only compare a Person object with another Person object"
+            )
 
         return (
             self.name == other.name
@@ -81,6 +113,41 @@ print(p == p2)
 p.active_status()
 print(p3)
 
-
 d = Developer(name="Angelo", age=26, programming_language="Python")
 print(d)
+
+s1 = Person("Angelo", 26)
+print(sys.getsizeof(s1))
+
+
+class Animal:
+    __slots__ = ["sound"]
+    sound: str
+
+    def __init__(self, sound: str):
+        self.sound = sound
+
+    def make_sound(self):
+        print(f"{self.sound}")
+
+    def __str__(self) -> str:
+        return f"I'm an animal and I make {self.sound} sounds"
+
+
+class Cat(Animal):
+    __slots__ = ["name"]
+    name: str
+
+    def __init__(self, sound: str, name: str):
+        super().__init__(sound)
+        self.name = name
+
+    def __str__(self) -> str:
+        return f"I'm a cat, my name is {self.name} and I make {self.sound} sounds"
+
+    def __repr__(self) -> str:
+        return f"Cat(name={self.name}, sound={self.sound})"
+
+
+cat = Cat("meow", "Tom")
+print(cat)
